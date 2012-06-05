@@ -1,0 +1,17 @@
+<% content_for :sidebar do %>
+  <div data-hook="homepage_sidebar_navigation">
+    <%= render :partial => 'spree/shared/taxonomies' %>
+  </div>
+<% end %>
+<div id="main"></div>
+<script type="text/javascript">
+
+    Spree.api_key = '<%= api_key %>';
+    Spree.internal_subdomain = '<%= ENV['INTERNAL_SUBDOMAIN'] %>';
+    Spree.preload.products = <%== @products_json %>;
+
+    $(function() {
+      Spree.init(); //start backbone
+    });
+
+</script>

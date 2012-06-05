@@ -1,0 +1,19 @@
+<div id="paginator">
+  <% if(pages > 1) { %>
+    <% if(prev) { %>
+      <a href="#" class="prev">&laquo;</a>
+    <% } else { %>
+      <span>&laquo;</span>
+    <% } %>
+
+    <span class="paginator-text">
+      Page <%= page %> of <%= pages %>
+    </span>
+
+    <% if(next) { %>
+      <a href="#" class="next">&raquo;</a>
+    <% } else { %>
+      <span>&raquo;</span>
+    <% } %>
+  <% } %>
+</div>

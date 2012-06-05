@@ -1,0 +1,18 @@
+<ul id="products" class="inline product-listing">
+  <% if(products.length==0){ %>
+    <li>No products found.</li>
+  <% } %>
+  <% _.each(products.paged_models(), function(product) { %>
+    <% var pedal = _.cycle(["alpha", "secondary", "", "omega secondary"]); %>
+    <li id="product_<%= product.id %>" class="columns three <%= pedal() %>" data-hook="products_list_item" itemscope itemtype="http://schema.org/Product">
+      <div class="product-image">
+        <a href="">
+          <img src="/spree/products/<%= product.images.models[0].id %>/small/<%= product.images.models[0].get('attachment_file_name') %>">
+        </a>
+      </div>
+      <a href="#" class="info"><%= product.get('name') %></a>
+      <span class="price selling" itemprop="price"><%= product.get('price') %></span>
+    </li>
+  <% }); %>
+</ul>
+
