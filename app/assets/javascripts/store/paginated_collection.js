@@ -42,7 +42,11 @@ var PaginatedCollection = Backbone.Collection.extend({
   },
 
   paged_models: function(){
-    return this.models.slice(((this.page * this.per_page) - this.per_page), (this.page * this.per_page));
+    if(this.models.length > (((this.page - 1) * this.per_page) + 1)){
+      return this.models.slice(((this.page * this.per_page) - this.per_page), (this.page * this.per_page));
+    }else{
+      return this.models
+    }
   },
 
   added: function(){
@@ -66,12 +70,7 @@ var PaginatedCollection = Backbone.Collection.extend({
     }
     this.page = this.page + 1;
 
-    if(this.length<this.count){
-      this.fetch({add: true});
-    }else{
-      this.trigger('paged');
-
-    }
+    this.fetch();
   },
 
   previous_page: function() {
@@ -79,7 +78,8 @@ var PaginatedCollection = Backbone.Collection.extend({
       return false;
     }
     this.page = this.page - 1;
-    this.trigger('paged');
+
+    this.fetch();
   }
 
 });

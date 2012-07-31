@@ -1,0 +1,4 @@
+<div id="content" class="columns omega sixteen" data-hook>
+  <% var product = new Spree.Models.Product(JSON.parse(get('product_json'))) %>
+  <%= JST['store/templates/products/show']({ product: product }) %>
+</div>

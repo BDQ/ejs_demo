@@ -1,0 +1,11 @@
+<% var products = new Spree.Collections.Products() %>
+<% products.resetWithPagination(JSON.parse(get('products_json'))) %>
+<%= JST['store/templates/products/index']({ products: products }) %>
+
+<script type="text/javascript">
+  Spree.Data._preload.products = <%= get('products_json') %>;
+
+  $(function() {
+    Spree.init();
+  });
+</script>

@@ -1,24 +1,31 @@
 var Spree = {
-  Views: { Shared: {}, Products: {} },
-  Routers: {},
+  Views: { Shared: {}, Products: {}, Orders: {} },
+  Routers: { _active: {} },
   Models: {},
   Collections: {},
 
-  preload: {},
+  Data: { _preload: { }, products: null },
 
-  init: function() {
-    // this.products = new this.Collections.Products();
-    // this.products.resetWithPagination(this.preload.products);
-    // return Spree.Views.Products.Index({products: this.products})
+  current_order: null,
 
-    if(this.preload.products!=undefined){
+  init: function(){
+    if(this.Data._preload.products!=undefined){
       //preload products
-      this.products = new this.Collections.Products();
-      this.products.resetWithPagination(this.preload.products);
+      this.Data.products = new this.Collections.Products();
+      this.Data.products.resetWithPagination(this.Data._preload.products);
 
-      new this.Routers.Products();
-      Backbone.history.start();
+      this.Routers._active.products = new this.Routers.Products();
+      this.Routers._active.orders = new this.Routers.Orders();
+      Backbone.history.start({pushState: true})
+
+      $('a[data-push-state]').click(this._navigate);
     }
 
+    this.current_order = new Spree.Models.Order();
+  },
+
+  _navigate: function(evt){
+    evt.preventDefault();
+    Spree.Routers._active.products.navigate($(evt.currentTarget).attr('href'), true);
   }
 }

@@ -1,7 +1,7 @@
 Spree.Collections.Products = PaginatedCollection.extend({
   model: Spree.Models.Product,
   baseUrl: '/api/products',
-  per_page: 8,
+  per_page: 12,
   collection_name: 'products',
 
   resetWithPagination: function(paginatedProducts) {

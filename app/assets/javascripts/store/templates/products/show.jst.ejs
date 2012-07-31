@@ -1,0 +1,99 @@
+<div data-hook="product_show" itemscope itemtype="http://schema.org/Product">
+  <div class="columns six alpha" data-hook="product_left_part">
+    <div class="row" data-hook="product_left_part_wrap">
+
+      <div id="product-images" data-hook="product_images">
+        <div id="main-image" data-hook>
+          <img src="/spree/products/<%= product.images.first().id %>/product/<%= product.images.first().get('attachment_file_name') %>" itemprop="image" alt="<%= product.get('name') %>">
+        </div>
+        <div id="thumbnails" data-hook>
+          <!-- render :partial => 'thumbnails', :locals => { :product => @product } -->
+          <% if(product.images.length>1){ %>
+            <ul id="product-thumbnails" class="thumbnails inline" data-hook>
+              <% product.images.each(function(i){ %>
+                <li class="tmb-all" id="tmb-<%= i.id %>">
+                  <img src="/spree/products/<%= i.id %>/mini/<%= i.get('attachment_file_name') %>" alt="<%= product.get('name') %>">
+                </li>
+              <% }); %>
+            </ul>
+          <% } %>
+        </div>
+      </div>
+
+      <div data-hook="product_properties">
+        <!-- render :partial => 'properties' -->
+        <!-- need to fetch properties, and display after load -->
+      </div>
+
+    </div>
+  </div>
+
+  <div class="columns ten omega" data-hook="product_right_part">
+    <div class="row" data-hook="product_right_part_wrap">
+
+      <div id="product-description" data-hook="product_description">
+
+        <h1 class="product-title" itemprop="name"><%= product.get('name') %></h1>
+
+        <div itemprop="description" data-hook="description">
+          <%= product.get('description') %>
+        </div>
+
+        <div id="cart-form" data-hook="cart_form">
+          <!-- render :partial => 'cart_form' -->
+          <form method="post" action="/orders/populate" accept-charset="UTF-8">
+            <div style="margin:0;padding:0;display:inline">
+              <input type="hidden" value="✓" name="utf8">
+              <input type="hidden" value="s6r/dpmiA5reohTRMJ0fd354bFBXNhVaz2j3LoxlEsE=" name="authenticity_token">
+            </div>
+
+            <div itemtype="http://schema.org/Offer" itemscope="" itemprop="offers" data-hook="inside_product_cart_form" id="inside-product-cart-form">
+
+              <% if(product.variants.length>1){ %>
+                <div class="columns five alpha" id="product-variants">
+                  <h6 class="product-section-title">Variants</h6>
+                  <ul>
+                    <% product.variants.each(function(variant,i){ %>
+                      <% if(!variant.get('is_master')){ %>
+                        <li>
+                        <input type="radio" value="<%= variant.id %>" name="products[<%= product.id %>]" id="products_<%= product.id %>_<%= variant.id %>" checked="checked">
+                          <label for="products_528469905_11550984">
+                            <span class="variant-description">
+                              <%= variant.options() %>
+                            </span>
+                          </label>
+                        </li>
+                      <% } %>
+                    <% }); %>
+                  </ul>
+                </div>
+              <% } %>
+
+              <div class="columns five  omega " data-hook="product_price">
+                <div id="product-price">
+                  <h6 class="product-section-title">Price</h6>
+                  <div><span itemprop="price" class="price selling"><%= product.get('price') %></span></div>
+                </div>
+
+                <div class="add-to-cart">
+                    <input type="number" value="1" name="quantity" min="1" max="30" id="quantity" class="title">
+                    <button type="submit" id="add-to-cart-button" class="large primary">
+                      Add To Cart
+                  </button>
+                </div>
+
+              </div>
+
+            </div>
+          </form>
+
+        </div>
+
+      </div>
+
+      <!-- render :partial => 'taxons' -->
+
+    </div>
+  </div>
+
+</div>

@@ -1,7 +1,7 @@
 <div id="paginator">
   <% if(pages > 1) { %>
     <% if(prev) { %>
-      <a href="#" class="prev">&laquo;</a>
+      <a href="?page=<%=prev%>" class="prev" data-push-state>&laquo;</a>
     <% } else { %>
       <span>&laquo;</span>
     <% } %>
@@ -11,7 +11,7 @@
     </span>
 
     <% if(next) { %>
-      <a href="#" class="next">&raquo;</a>
+      <a href="?page=<%=next%>" class="next" data-push-state>&raquo;</a>
     <% } else { %>
       <span>&raquo;</span>
     <% } %>

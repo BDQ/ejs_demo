@@ -3,23 +3,10 @@ Spree.Views.Products.Index = Backbone.View.extend({
     this.collection.on('reset paged add remove', this.render, this);
   },
 
-  events: {
-    'click a.prev': 'previous',
-    'click a.next': 'next'
-  },
-
-  previous: function() {
-    this.collection.previous_page();
-    return false;
-  },
-
-  next: function() {
-    this.collection.next_page();
-    return false;
-  },
-
   render: function () {
     this.$el.html(JST['store/templates/products/index']({ products: this.collection }));
+    this.$el.find('a[data-push-state]').click(Spree._navigate);
     return this;
   }
+
 });

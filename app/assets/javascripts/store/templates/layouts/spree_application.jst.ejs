@@ -1,0 +1,42 @@
+<!doctype html>
+<!--[if lt IE 7 ]> <html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie ie8" lang="en"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie ie9" lang="en"> <![endif]-->
+<!--[if gt IE 9]><!--><html lang="en"><!--<![endif]-->
+<head data-hook="inside_head">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta charset="utf-8">
+
+  <!-- always force latest ie rendering engine (even in intranet) & chrome frame -->
+  <meta http-equiv="x-ua-compatible" content="ie=edge,chrome=1">
+
+  <title><%= get('title') %></title>
+
+  <meta content="text/html; charset=utf-8" http-equiv="content-type">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1" name="viewport">
+
+  <%= get('meta_data_tags') %>
+
+  <%= get('stylesheet_link_tag', 'store/all') %>
+
+  <%= get('csrf_meta_tags') %>
+  <%= get('javascript_include_tag', 'store/all') %>
+
+  <script type="text/javascript">
+    Spree.api_key = '<%= get('api_key') %>';
+  </script>
+  <!--[if lt ie 9]>
+  <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+</head>
+  <body data-hook="body">
+    <div class="container">
+      <%= JST['store/templates/shared/header']() %>
+      <div id="wrapper" class="row" data-hook>
+        <%= _view() %>
+      </div>
+      <%= JST['store/templates/shared/footer']() %>
+    </div>
+  </body>
+</html>

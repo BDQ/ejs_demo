@@ -15,6 +15,7 @@
 //= require underscore
 //= require backbone
 
+//= require store/boot
 //= require store/config
 //= require store/paginated_collection
 //= require store/underscore_mixins

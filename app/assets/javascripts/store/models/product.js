@@ -4,8 +4,8 @@ Spree.Models.Product = Backbone.Model.extend({
   },
 
   build_associations: function(){
-    this.variants = new Spree.Collections.Variants( this.get('variants' ) );
-    // this.option_types = new Spree.Admin.Collections.OptionTypes( this.get('option_types' ) );
+    this.variants = new Spree.Collections.Variants( this.get('variants' ), {product: this} );
+    this.option_types = new Spree.Collections.OptionTypes( this.get('option_types' ) );
     this.images = new Spree.Collections.Images( this.get('images' ) );
   },
 
