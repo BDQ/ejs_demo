@@ -18,7 +18,11 @@ Spree.Views.Products.Show = Backbone.View.extend({
       attrs['variant_id]'] = $('#product-variants input:checked').val()
     }
 
+    variant = this.model.variants.find(function(v){ return v.id == attrs['variant_id'] });
     attrs['quantity'] = $('#quantity').val();
+    attrs['product'] = this.model;
+    attrs['price'] = variant.get('price');
+
     Spree.current_order.add_variant(attrs);
     Spree.current_order.save();
 

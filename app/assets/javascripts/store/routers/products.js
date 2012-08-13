@@ -24,7 +24,12 @@ Spree.Routers.Products = Backbone.Router.extend({
   },
 
   show: function(permalink){
-    var product = Spree.Data.products.find(function(p){ return p.get('permalink') == permalink});
+    console.log('product show');
+    if(Spree.Data.product==undefined){
+      var product = Spree.Data.products.find(function(p){ return p.get('permalink') == permalink});
+    }else{
+      var product = Spree.Data.product;
+    }
 
     var view = new Spree.Views.Products.Show({ model: product });
     $('#wrapper').html(view.render().el);

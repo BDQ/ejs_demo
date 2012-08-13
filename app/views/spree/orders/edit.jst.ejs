@@ -1,0 +1,2 @@
+<% var order = new Spree.Models.Order(JSON.parse(get('order_json'))) %>
+<%= JST['store/templates/orders/edit']({ order: order }) %>

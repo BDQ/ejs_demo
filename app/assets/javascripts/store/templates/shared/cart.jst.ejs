@@ -1,0 +1,6 @@
+<a href="/cart" data-push-state class="<%= (count==0) ? 'empty' : 'full' %>">
+  Cart: (<%= (count==0) ? 'Empty' : count %>)
+  <% if(count>0){ %>
+    <span class="amount"><%= total %></span>
+  <% } %>
+</a>

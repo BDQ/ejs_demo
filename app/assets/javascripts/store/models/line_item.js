@@ -1,4 +1,12 @@
 Spree.Models.LineItem = Backbone.Model.extend({
+  initialize: function(){
+    this.build_associations();
+  },
+
+  build_associations: function() {
+    this.product = new Spree.Models.Product(this.get('product'));
+  },
+
   toJSON: function() {
 
     if(this.get('quantity')<=0){
@@ -15,7 +23,8 @@ Spree.Models.LineItem = Backbone.Model.extend({
     }
     return object;
   },
+
   total: function() {
-    return parseInt(this.get('quantity')) * parseFloat(this.get('price'));
+    return (parseInt(this.get('quantity')) * parseFloat(this.get('price'))).toFixed(2);
   }
 });

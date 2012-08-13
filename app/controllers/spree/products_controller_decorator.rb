@@ -5,6 +5,11 @@ module Spree
     def show
       return unless @product
 
+      @searcher = Spree::Config.searcher_class.new(params)
+      @products = @searcher.retrieve_products.where(:permalink => @product.permalink)
+
+      params[:page] = 0
+      @products_json = render_to_string(:file => 'spree/api/v1/products/index')
       @product_json = render_to_string(:file => 'spree/api/v1/products/show')
 
       referer = request.env['HTTP_REFERER']

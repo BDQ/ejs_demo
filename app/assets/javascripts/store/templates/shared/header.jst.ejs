@@ -6,19 +6,28 @@
     <ul id="nav-bar" class="inline" data-hook="">
       <li id="link-to-login"><a href="/login">Login</a></li>
       <li id="search-bar" data-hook="">
-  <form accept-charset="UTF-8" action="/products" method="get"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"></div>
-  <select id="taxon" name="taxon"><option value="">All departments</option>
-<option value="1000">Categories</option>
-<option value="20000">Brands</option></select>
-  <input id="keywords" name="keywords" placeholder="Search" type="search">
-  <input type="submit" value="Search">
-</form>
-</li>
-          </ul></nav>
-          <nav class="columns alpha omega sixteen"><ul id="main-nav-bar" class="inline" data-hook="">
-<li id="home-link" data-hook=""><a href="/" data-push-state>Home</a></li>
-<li id="link-to-cart" data-hook=""><a href="/cart" class="empty">Cart: (Empty)</a></li>
+        <form accept-charset="UTF-8" action="/products" method="get">
+          <div style="margin:0;padding:0;display:inline">
+            <input name="utf8" type="hidden" value="✓">
+          </div>
+          <select id="taxon" name="taxon"><option value="">All departments</option>
+            <option value="1000">Categories</option>
+            <option value="20000">Brands</option>
+          </select>
+          <input id="keywords" name="keywords" placeholder="Search" type="search">
+          <input type="submit" value="Search">
+        </form>
+      </li>
+    </ul>
+  </nav>
 
-            </ul></nav>
-            
-      </header>
+  <nav class="columns alpha omega sixteen">
+    <ul id="main-nav-bar" class="inline" data-hook="">
+      <li id="home-link" data-hook="">
+        <a href="/" data-push-state>Home</a>
+      </li>
+      <li id="link-to-cart" data-hook="">
+      </li>
+    </ul>
+  </nav>
+</header>

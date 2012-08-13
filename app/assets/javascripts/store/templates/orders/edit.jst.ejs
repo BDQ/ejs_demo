@@ -1,78 +1,95 @@
 <div data-hook="" class="columns omega  sixteen alpha " id="content">
   <h1>Shopping Cart</h1>
 
-  <div data-hook="outside_cart_form">
-    <form method="post" id="update-cart" class="edit_order" action="/cart" accept-charset="UTF-8">
-      <div style="margin:0;padding:0;display:inline">
-        <input type="hidden" value="✓" name="utf8">
-        <input type="hidden" value="put" name="_method">
-        <input type="hidden" value="6OR6OZVXWB8kkxediSQ5qVuU1MbuSXd9bedtA5+arWw=" name="authenticity_token">
-      </div>
-      <div data-hook="inside_cart_form">
+  <% if(order.line_items.size()>0){ %>
+    <div data-hook="outside_cart_form">
+      <form method="post" id="update-cart" class="edit_order" action="/cart" accept-charset="UTF-8">
+        <div style="margin:0;padding:0;display:inline">
+          <input type="hidden" value="✓" name="utf8">
+          <input type="hidden" value="put" name="_method">
+          <input type="hidden" value="6OR6OZVXWB8kkxediSQ5qVuU1MbuSXd9bedtA5+arWw=" name="authenticity_token">
+        </div>
+        <div data-hook="inside_cart_form">
+          <div data-hook="cart_items">
 
-        <div data-hook="cart_items">
-          
-<table data-hook="" id="cart-detail">
-  <thead>
-    <tr data-hook="cart_items_headers">
-      <th colspan="2" class="cart-item-description-header">Item</th>
-      <th class="cart-item-price-header">Price</th>
-      <th class="cart-item-quantity-header">Qty</th>
-      <th class="cart-item-total-header">Total</th>
-      <th class="cart-item-delete-header"></th>
-    </tr>
-  </thead>
-  <tbody data-hook="" id="line_items">
-    
-      <tr class=" line-item">
-  <td data-hook="cart_item_image" class="cart-item-image">
-      <a href="/products/spree-bag"><img src="/spree/products/1027/small/spree_bag.jpeg?1343588454" alt="Spree_bag"></a>
-  </td>
-  <td data-hook="cart_item_description" class="cart-item-description">
-    <h4><a href="/products/spree-bag">Spree Bag</a></h4>
-    
-    Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nulla nonummy aliquet mi. Proin lacus. ...
-  </td>
-  <td data-hook="cart_item_price" class="cart-item-price">
-    $22.99
-  </td>
-  <td data-hook="cart_item_quantity" class="cart-item-quantity">
-    <input type="number" value="2" size="5" name="order[line_items_attributes][0][quantity]" min="0" id="order_line_items_attributes_0_quantity" class="line_item_quantity">
-  </td>
-  <td data-hook="cart_item_total" class="cart-item-total">
-    $45.98
-  </td>
-  <td data-hook="cart_item_delete" class="cart-item-delete">
-    <a id="delete_line_item_1070870199" class="delete" href="#"><img src="/assets/icons/delete.png" alt="Delete"></a>
-  </td>
-</tr>
+            <table data-hook="" id="cart-detail">
+              <thead>
+                <tr data-hook="cart_items_headers">
+                  <th colspan="2" class="cart-item-description-header">Item</th>
+                  <th class="cart-item-price-header">Price</th>
+                  <th class="cart-item-quantity-header">Qty</th>
+                  <th class="cart-item-total-header">Total</th>
+                  <th class="cart-item-delete-header"></th>
+                </tr>
+              </thead>
+              <tbody data-hook="" id="line_items">
 
-<input type="hidden" value="1070870199" name="order[line_items_attributes][0][id]" id="order_line_items_attributes_0_id">  </tbody>
-</table>
+              <% order.line_items.each(function(line_item,i){ %>
+                <tr class=" line-item">
+                  <td data-hook="cart_item_image" class="cart-item-image">
+                    <% if(line_item.product.images.size()>0){ %>
+                      <a href="/products/<%= line_item.product.get('permalink') %>" data-push-state>
+                        <img src="/spree/products/<%= line_item.product.images.first().id %>/small/<%= line_item.product.images.first().get('attachment_file_name') %>" itemprop="image" alt="<%= line_item.product.get('name') %>">
+                      </a>
+                    <% } %>
+                  </td>
+                  <td data-hook="cart_item_description" class="cart-item-description">
+                    <h4>
+                      <a href="/products/<%= line_item.product.get('permalink') %>" data-push-state><%= line_item.product.get('name') %></a>
+                    </h4>
+                    <%= line_item.product.get('description').substring(0,100) %>...
+                  </td>
+                  <td data-hook="cart_item_price" class="cart-item-price">
+                    <%= line_item.get('price') %>
+                  </td>
+                  <td data-hook="cart_item_quantity" class="cart-item-quantity">
+                    <input type="number" value="<%= line_item.get('quantity') %>" data-line-item-id="<%= line_item.id %>" size="5" name="order[line_items_attributes][<%= i %>][quantity]" min="0" id="order_line_items_attributes_<%= i %>_quantity" class="line_item_quantity">
+                  </td>
+                  <td data-hook="cart_item_total" class="cart-item-total">
+                    <%= line_item.total() %>
+                  </td>
+                  <td data-hook="cart_item_delete" class="cart-item-delete">
+                    <a id="delete_line_item_<%= line_item.get('variant_id') %>" 
+                       data-line-item-id="<%= line_item.id %>" class="delete" href="#">
+                      <img src="/assets/icons/delete.png" alt="Delete">
+                    </a>
+                    <input type="hidden" value="<% line_item.get('variant_id') %>" name="order[line_items_attributes][<%= i %>][id]" id="order_line_items_attributes_<%= i %>_id">
+                  </td>
+                </tr>
+              <% }); %>
+
+            </tbody>
+          </table>
+
+          </div>
+
+          <div class="columns sixteen alpha omega" data-hook="" id="subtotal">
+            <h5>Subtotal: <span class="order-total"><%= order.item_total() %></span></h5>
+          </div>
+
+          <div data-hook="cart_buttons" class="links columns sixteen alpha omega">
+            <button id="update-button" class="primary">Update</button>
+            <a id="checkout-link" class="button checkout primary" href="/checkout">Checkout</a>
+          </div>
 
         </div>
+      </form>
+    </div>
 
-        <div class="columns sixteen alpha omega" data-hook="" id="subtotal">
-          <h5>Subtotal: <span class="order-total">$45.98</span></h5>
-        </div>
+    <div data-hook="" id="empty-cart">
+      <form method="post" action="/cart/empty" accept-charset="UTF-8"><div style="margin:0;padding:0;display:inline"><input type="hidden" value="✓" name="utf8"><input type="hidden" value="put" name="_method"><input type="hidden" value="6OR6OZVXWB8kkxediSQ5qVuU1MbuSXd9bedtA5+arWw=" name="authenticity_token"></div>
+        <p data-hook="" id="clear_cart_link">
+          <input id="empty_cart" type="button" value="Empty Cart" name="commit" class="button gray">
+          or
+          <a class="continue button gray" data-push-state href="/products">Continue shopping</a>
+        </p>
+      </form>
+    </div>
+  <% }else{ %>
+    <div data-hook="empty_cart">
+      <p>Your cart is empty</p>
+      <p><a href="/products" data-push-state class="button continue">Continue shopping</a></p>
+    </div>
+  <% } %>
 
-        <div data-hook="cart_buttons" class="links columns sixteen alpha omega">
-          <button id="update-button" class="primary">
-            Update
-</button>         <a id="checkout-link" class="button checkout primary" href="/checkout">Checkout</a>
-        </div>
-
-      </div>
-</form>  </div>
-
-  <div data-hook="" id="empty-cart">
-    <form method="post" action="/cart/empty" accept-charset="UTF-8"><div style="margin:0;padding:0;display:inline"><input type="hidden" value="✓" name="utf8"><input type="hidden" value="put" name="_method"><input type="hidden" value="6OR6OZVXWB8kkxediSQ5qVuU1MbuSXd9bedtA5+arWw=" name="authenticity_token"></div>
-      <p data-hook="" id="clear_cart_link">
-        <input type="submit" value="Empty Cart" name="commit" class="button gray">
-        or
-        <a class="continue button gray" href="/products">Continue shopping</a>
-      </p>
-</form>  </div>
-
-
-        </div>
+</div>
