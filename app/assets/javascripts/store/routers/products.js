@@ -7,6 +7,8 @@ Spree.Routers.Products = Backbone.Router.extend({
   },
 
   index: function(page_num){
+    console.log('Product Index');
+
     if(page_num==undefined){
       page_num = 1;
     }
@@ -24,7 +26,7 @@ Spree.Routers.Products = Backbone.Router.extend({
   },
 
   show: function(permalink){
-    console.log('product show');
+    console.log('Product Show');
     if(Spree.Data.product==undefined){
       var product = Spree.Data.products.find(function(p){ return p.get('permalink') == permalink});
     }else{

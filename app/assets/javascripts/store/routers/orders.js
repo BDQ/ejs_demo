@@ -3,11 +3,9 @@ Spree.Routers.Orders = Backbone.Router.extend({
     'cart': 'edit'
   },
 
-  show: function(){
-    console.log('order show');
-  },
-
   edit: function(){
+    console.log('Order Edit');
+
     var view = new Spree.Views.Orders.Edit({ model: Spree.current_order });
     $('#wrapper').html(view.render().el);
   }

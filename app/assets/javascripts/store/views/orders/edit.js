@@ -22,6 +22,7 @@ Spree.Views.Orders.Edit = Backbone.View.extend({
   },
 
   render: function () {
+    Spree.current_order.change();
     this.$el.html(JST['store/templates/orders/edit']({ order: this.model }));
 
     return this;
