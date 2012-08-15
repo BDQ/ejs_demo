@@ -1,3 +1,4 @@
+require 'v8'
 require 'action_controller/base'
 require 'action_controller/metal/responder'
 
