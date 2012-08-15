@@ -2,6 +2,15 @@ module Spree
   ProductsController.class_eval do
     helper Spree::Api::ApiHelpers
 
+    def index
+      @searcher = Config.searcher_class.new(params)
+      @products = @searcher.retrieve_products
+
+      @products_json = render_to_string(:file => 'spree/api/v1/products/index')
+
+      respond_with(@products)
+    end
+
     def show
       return unless @product
 

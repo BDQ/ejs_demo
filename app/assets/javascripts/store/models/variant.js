@@ -10,7 +10,7 @@ Spree.Models.Variant = Backbone.Model.extend({
         return ot.id == ov.get('option_type_id');
       });
 
-      return txt + option_type.get('presentation') + ': ' + ov.get('presentation');
+      return txt + option_type.get('presentation') + ': ' + ov.get('presentation') + ' ';
     }, '', this);
   }
 

@@ -14,6 +14,7 @@ var Spree = {
       this.Data.products = new this.Collections.Products();
       this.Data.products.resetWithPagination(this.Data._preload.products);
     }
+
     this.Routers._active.products = new this.Routers.Products();
     this.Routers._active.orders = new this.Routers.Orders();
     Backbone.history.start({pushState: true})
@@ -38,10 +39,20 @@ var Spree = {
 
     $('#link-to-cart').html(JST['store/templates/shared/cart']({ count: order.count, total: order.total }));
     $('#link-to-cart a').click(Spree._navigate);
+
+    var user = Spree.status.get('user');
+    Spree.current_user = new Spree.Models.User({id: user.id})
+    Spree.current_user.on('change sync', Spree.update_account);
+    Spree.update_account();
   },
 
   update_cart: function(){
     $('#link-to-cart').html(JST['store/templates/shared/cart']({ count: Spree.current_order.line_items.size(), total: Spree.current_order.item_total() }));
     $('#link-to-cart a').click(Spree._navigate);
+  },
+
+  update_account: function(){
+    $('#nav-bar .account').remove();
+    $('#nav-bar').prepend(JST['store/templates/shared/account']({}));
   }
 }

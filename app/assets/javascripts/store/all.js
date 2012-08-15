@@ -15,8 +15,8 @@
 //= require underscore
 //= require backbone
 
-//= require store/boot
-//= require store/config
+//= require store/plumbing
+//= require store/spree
 //= require store/paginated_collection
 //= require store/underscore_mixins
 //= require_tree ./models

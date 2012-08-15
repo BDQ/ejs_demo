@@ -4,7 +4,8 @@ class StatusController < Spree::BaseController
     render :json => {:order => {:number => @current_order.number,
                                 :total => @current_order.total,
                                 :count => @current_order.line_items.size,
-                                :token => @current_order.token} }
+                                :token => @current_order.token},
+                     :user  => {:id => current_user.try(:id)} }
   end
 
 end

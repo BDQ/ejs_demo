@@ -21,6 +21,23 @@ module Scribble
     end
   end
 
+  class Config
+    def self.source_files
+      load_config
+      @config['source']
+    end
+
+    def self.layout
+      load_config
+      @config['layout']
+    end
+
+    private
+      def self.load_config
+        @config ||= YAML.load_file(Rails.root.join('config/scribble.yaml'))
+      end
+  end
+
   class Context
     def initialize(controller)
       @controller = controller
@@ -28,7 +45,7 @@ module Scribble
 
     def load_templates
       compile = %Q{JST = {};\n}
-      Dir.glob(Rails.root.join("app/assets/javascripts/store/templates/**/*.jst.ejs")) do |tpl|
+      Dir.glob(Rails.root.join("app/assets/javascripts/**/*.jst.ejs")) do |tpl|
           path = tpl.split(/app\/assets\/javascripts\//).last.split(/\.[.a-z]*\z/).first
           controller, action = path.split('/')[2..-1]
 
@@ -42,27 +59,9 @@ module Scribble
       helpers = Helpers.new(@controller)
 
       js_context = V8::Context.new(with: helpers)
-      js_context.load(Rails.root.join("vendor/assets/javascripts/underscore.js"))
-      js_context.load(Rails.root.join("vendor/assets/javascripts/backbone.js"))
-      js_context.load(Rails.root.join("app/assets/javascripts/store/config.js"))
-      js_context.load(Rails.root.join("app/assets/javascripts/store/paginated_collection.js"))
-      js_context.load(Rails.root.join("app/assets/javascripts/store/underscore_mixins.js"))
-      js_context.load(Rails.root.join("app/assets/javascripts/store/models/product.js"))
-      js_context.load(Rails.root.join("app/assets/javascripts/store/models/variant.js"))
-      js_context.load(Rails.root.join("app/assets/javascripts/store/models/option_type.js"))
-      js_context.load(Rails.root.join("app/assets/javascripts/store/models/option_value.js"))
-      js_context.load(Rails.root.join("app/assets/javascripts/store/models/image.js"))
-      js_context.load(Rails.root.join("app/assets/javascripts/store/models/order.js"))
-      js_context.load(Rails.root.join("app/assets/javascripts/store/models/line_item.js"))
-      js_context.load(Rails.root.join("app/assets/javascripts/store/models/adjustment.js"))
-      js_context.load(Rails.root.join("app/assets/javascripts/store/collections/products.js"))
-      js_context.load(Rails.root.join("app/assets/javascripts/store/collections/orders.js"))
-      js_context.load(Rails.root.join("app/assets/javascripts/store/collections/line_items.js"))
-      js_context.load(Rails.root.join("app/assets/javascripts/store/collections/adjustments.js"))
-      js_context.load(Rails.root.join("app/assets/javascripts/store/collections/variants.js"))
-      js_context.load(Rails.root.join("app/assets/javascripts/store/collections/option_types.js"))
-      js_context.load(Rails.root.join("app/assets/javascripts/store/collections/option_values.js"))
-      js_context.load(Rails.root.join("app/assets/javascripts/store/collections/images.js"))
+      Config.source_files.each do |file|
+        js_context.load(Rails.root.join file)
+      end
       js_context
     end
   end
@@ -82,7 +81,7 @@ module Scribble
 
         compile = ctx.load_templates
         compile << %Q{var _view = #{EJS.compile(Pathname.new(template).read)};
-var layout = JST['store/templates/layouts/spree_application'];
+var layout = JST['#{Scribble::Config.layout}'];
 layout()}
 
         @controller.response_body =  ctx.js_context.eval(compile)

@@ -1,0 +1,12 @@
+<% if(Spree.current_user.id==null){ %>
+  <li class="account" id="link-to-login">
+    <a href="/login">Login</a>
+  </li>
+<% }else{ %>
+  <li class="account">
+    <a href="/account">My Account</a>
+  </li>
+  <li class="account">
+    <a href="/user/logout" data-method="delete" rel="nofollow">Logout</a>
+  </li>
+<% } %>
