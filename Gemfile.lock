@@ -134,6 +134,8 @@ GEM
     execjs (1.4.0)
       multi_json (~> 1.0)
     ffaker (1.12.1)
+    foreman (0.53.0)
+      thor (>= 0.13.6)
     highline (1.6.11)
     hike (1.2.1)
     httparty (0.8.3)
@@ -247,6 +249,7 @@ DEPENDENCIES
   coffee-rails (~> 3.2.1)
   debugger
   ejs
+  foreman
   jquery-rails
   mysql2
   rails (= 3.2.6)

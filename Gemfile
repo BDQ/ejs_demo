@@ -10,6 +10,7 @@ end
 
 group :production do
   gem 'mysql2'
+  gem 'foreman'
 end
 
 group :assets do
