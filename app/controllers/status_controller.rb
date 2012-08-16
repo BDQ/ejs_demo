@@ -1,11 +1,8 @@
 class StatusController < Spree::BaseController
+  helper Spree::Api::ApiHelpers
+
   def index
-    @current_order = current_order(true)
-    render :json => {:order => {:number => @current_order.number,
-                                :total => @current_order.total,
-                                :count => @current_order.line_items.size,
-                                :token => @current_order.token},
-                     :user  => {:id => current_user.try(:id)} }
+    @order = current_order(true)
   end
 
 end

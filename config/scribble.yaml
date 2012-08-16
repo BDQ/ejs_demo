@@ -12,6 +12,8 @@ source:
   - app/assets/javascripts/store/models/order.js
   - app/assets/javascripts/store/models/line_item.js
   - app/assets/javascripts/store/models/adjustment.js
+  - app/assets/javascripts/store/models/taxonomy.js
+  - app/assets/javascripts/store/models/taxon.js
   - app/assets/javascripts/store/collections/products.js
   - app/assets/javascripts/store/collections/orders.js
   - app/assets/javascripts/store/collections/line_items.js
@@ -20,4 +22,6 @@ source:
   - app/assets/javascripts/store/collections/option_types.js
   - app/assets/javascripts/store/collections/option_values.js
   - app/assets/javascripts/store/collections/images.js
+  - app/assets/javascripts/store/collections/taxonomies.js
+  - app/assets/javascripts/store/collections/taxons.js
 layout: store/templates/layouts/spree_application

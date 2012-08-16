@@ -20,6 +20,10 @@ module Scribble
       end
 
     end
+
+    def full_path
+      @controller.request.fullpath
+    end
   end
 
   class Config

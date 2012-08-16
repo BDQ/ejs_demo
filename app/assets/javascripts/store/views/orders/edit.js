@@ -8,17 +8,6 @@ Spree.Views.Orders.Edit = Backbone.View.extend({
 
   initialize: function(){
     this.model.on('sync', this.render, this);
-
-    if(this.model.line_items.size()==0){
-      this.model.fetch({success: function(model, resp){ 
-          model.build_associations()
-
-          var view = new Spree.Views.Orders.Edit({ model: Spree.current_order });
-          $('#wrapper').html(view.render().el);
-        }
-      });
-    }
-
   },
 
   render: function () {

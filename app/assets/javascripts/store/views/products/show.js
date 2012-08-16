@@ -5,6 +5,7 @@ Spree.Views.Products.Show = Backbone.View.extend({
 
   render: function () {
     this.$el.html(JST['store/templates/products/show']({ product: this.model }));
+    this.$el.find('a[data-push-state]').click(Spree._navigate);
     return this;
   },
 

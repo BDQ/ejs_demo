@@ -1,19 +1,14 @@
 <aside id="sidebar" class="columns alpha four" data-hook="">
   <div data-hook="homepage_sidebar_navigation">
     <nav id="taxonomies" class="sidebar-item" data-hook="">
-      <h6 class="taxonomy-root">Shop by Category</h6>
-      <ul class="taxons-list">
-        <li><a href="/t/categories/clothing">Clothing</a></li>
-        <li><a href="/t/categories/bags">Bags</a></li>
-        <li><a href="/t/categories/mugs">Mugs</a></li>
-      </ul>
-      <h6 class="taxonomy-root">Shop by Brand</h6>
-      <ul class="taxons-list">
-        <li><a href="/t/brands/ruby-on-rails">Ruby on Rails</a></li>
-        <li><a href="/t/brands/ruby">Ruby</a></li>
-        <li><a href="/t/brands/apache">Apache</a></li>
-        <li><a href="/t/brands/spree">Spree</a></li>
-      </ul>
+      <% Spree.Data.taxonomies.each(function(taxonomy){ %>
+        <h6 class="taxonomy-root">Shop by <%= taxonomy.root.get('name') %></h6>
+        <ul class="taxons-list">
+          <% taxonomy.root.taxons.each(function(taxon){ %>
+            <li><a href="/t/<%= taxon.get('permalink') %>" data-push-state><%= taxon.get('name') %></a></li>
+          <% }); %>
+        </ul>
+      <% }); %>
     </nav>
   </div>
 </aside>

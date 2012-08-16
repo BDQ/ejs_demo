@@ -1,12 +1,16 @@
 var Spree = {
-  Views: { Shared: {}, Products: {}, Orders: {} },
+  Views: { Shared: {}, Products: {}, Orders: {}, Taxons: {} },
   Routers: { _active: {} },
   Models: {},
   Collections: {},
 
-  Data: { _preload: { }, products: null },
+  Data: { _preload: { }, products: null, taxonomies: null },
 
   current_order: null,
+
+  current_user: null,
+
+  rendered_page: null,
 
   init: function(){
     if(this.Data._preload.products!=undefined){
@@ -15,7 +19,13 @@ var Spree = {
       this.Data.products.resetWithPagination(this.Data._preload.products);
     }
 
+    if(this.Data._preload.taxonomies!=undefined){
+      //preload taxonomies
+      this.Data.taxonomies = new this.Collections.Taxonomies(this.Data._preload.taxonomies);
+    }
+
     this.Routers._active.products = new this.Routers.Products();
+    this.Routers._active.taxons = new this.Routers.Taxons();
     this.Routers._active.orders = new this.Routers.Orders();
     Backbone.history.start({pushState: true})
 
@@ -30,14 +40,20 @@ var Spree = {
     Spree.Routers._active.products.navigate($(evt.currentTarget).attr('href'), true);
   },
 
+  current_rendered: function(){
+    return '/' + Backbone.history.fragment==Spree.rendered_page;
+  },
+
   set_state: function(model, resp){
-    var order = Spree.status.get('order');
-    Spree.current_order = new Spree.Models.Order({number: order.number, 
-      token: order.token });
+    Spree.current_order = new Spree.Models.Order(Spree.status.get('order'));
+
+    if(Backbone.history.fragment=='cart'){
+      Spree.Routers._active.orders._edit();
+    }
 
     Spree.current_order.on('change sync', Spree.update_cart);
 
-    $('#link-to-cart').html(JST['store/templates/shared/cart']({ count: order.count, total: order.total }));
+    $('#link-to-cart').html(JST['store/templates/shared/cart']({ count: Spree.current_order.line_items.size(), total: Spree.current_order.item_total() }));
     $('#link-to-cart a').click(Spree._navigate);
 
     var user = Spree.status.get('user');

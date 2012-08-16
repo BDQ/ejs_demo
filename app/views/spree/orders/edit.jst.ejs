@@ -1,2 +1,6 @@
-<% var order = new Spree.Models.Order(JSON.parse(get('order_json'))) %>
+<% var order = new Spree.Models.Order() %>
 <%= JST['store/templates/orders/edit']({ order: order }) %>
+
+<script type="text/javascript">
+  Spree.rendered_page = '<%= full_path %>';
+</script>

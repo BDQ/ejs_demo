@@ -2,11 +2,15 @@ module Spree
   ProductsController.class_eval do
     helper Spree::Api::ApiHelpers
 
+    caches_page :index, :show
+
     def index
       @searcher = Config.searcher_class.new(params)
       @products = @searcher.retrieve_products
-
       @products_json = render_to_string(:file => 'spree/api/v1/products/index')
+
+      @taxonomies ||= Spree::Taxonomy.includes(:root => :children)
+      @taxonomies_json = render_to_string(:file => 'spree/api/v1/taxonomies/index')
 
       respond_with(@products)
     end
@@ -20,6 +24,9 @@ module Spree
       params[:page] = 0
       @products_json = render_to_string(:file => 'spree/api/v1/products/index')
       @product_json = render_to_string(:file => 'spree/api/v1/products/show')
+
+      @taxonomies ||= Spree::Taxonomy.includes(:root => :children)
+      @taxonomies_json = render_to_string(:file => 'spree/api/v1/taxonomies/index')
 
       referer = request.env['HTTP_REFERER']
       if referer
