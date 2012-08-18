@@ -2,5 +2,6 @@
 <%= JST['store/templates/orders/edit']({ order: order }) %>
 
 <script type="text/javascript">
+  Spree.Data._preload.taxonomies = <%= get('taxonomies_json') %>;
   Spree.rendered_page = '<%= full_path %>';
 </script>

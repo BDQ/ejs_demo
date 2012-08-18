@@ -11,6 +11,10 @@ module Spree
 
     def edit
       @order = current_order(true)
+
+      @taxonomies ||= Spree::Taxonomy.includes(:root => :children)
+      @taxonomies_json = render_to_string(:file => 'spree/api/v1/taxonomies/index')
+
       respond_with(@order)
     end
 
