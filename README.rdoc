@@ -2,6 +2,6 @@
 
 Also contains Scrible source code, as it's not extracted into its own gem yet (and may never be).
 
-Created for SpreeConf Europe 2012, as a proof on concept for my talk "Backbone.js and Spree". If you were there I hope you enjoyed the talk, if your weren't: SHAME ON YOU! 
+Created for SpreeConf Europe 2012, as a proof on concept for my talk "Backbone.js and Spree". If you were there I hope you enjoyed the talk, if you weren't: SHAME ON YOU! 
 
 Contributions, opinions, donations, condolences and specs are welcome.
