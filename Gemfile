@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.6'
+gem 'rails', '3.2.8'
 
 group :development do
   gem 'sqlite3'
@@ -22,7 +22,8 @@ end
 
 gem 'jquery-rails'
 
-gem 'spree', :github => 'BDQ/spree', :branch => 'respond_without'
+# gem 'spree', :github => 'BDQ/spree', :branch => 'respond_without'
+gem 'spree', :path => '../bdq_spree'
 
 gem 'ejs'
 

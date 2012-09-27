@@ -4,9 +4,9 @@
     <% if(products.length==0){ %>
       <li>No products found.</li>
     <% } %>
+    <% var pedal = _.cycle(["alpha", "secondary", "", "omega secondary"]); %>
     <% _.each(products.paged_models(), function(product) { %>
-      <% var pedal = _.cycle(["alpha", "secondary", "", "omega secondary"]); %>
-      <li id="product_<%= product.id %>" class="columns three <%= pedal() %>" data-hook="products_list_item" itemscope itemtype="http://schema.org/Product">
+      <li id="product_<%= product.id %>" class="columns three <%=  pedal() %>" data-hook="products_list_item" itemscope itemtype="http://schema.org/Product">
         <div class="product-image">
           <a href="/products/<%= product.get('permalink') %>" data-push-state>
             <img src="/spree/products/<%= product.images.models[0].id %>/small/<%= product.images.models[0].get('attachment_file_name') %>">
