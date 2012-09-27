@@ -22,8 +22,7 @@ end
 
 gem 'jquery-rails'
 
-# gem 'spree', :github => 'BDQ/spree', :branch => 'respond_without'
-gem 'spree', :path => '../bdq_spree'
+gem 'spree', :github => 'BDQ/spree', :branch => 'respond_without'
 
 gem 'ejs'
 
